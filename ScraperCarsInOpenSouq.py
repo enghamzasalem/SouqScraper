@@ -4,8 +4,8 @@ import time
 from bs4 import BeautifulSoup
 import json
 import csv
-filecsv = open('OpenSouq.csv', 'w', encoding='utf8')
-file = open('OpenSouq.json', 'w', encoding='utf8')
+filecsv = open('OpenSouqnew.csv', 'w', encoding='utf8')
+file = open('OpenSouqnew.json', 'w', encoding='utf8')
 # Set the URL you want to webscrape from
 url = 'https://jo.opensooq.com/ar/%D8%B3%D9%8A%D8%A7%D8%B1%D8%A7%D8%AA-%D9%88%D9%85%D8%B1%D9%83%D8%A8%D8%A7%D8%AA/%D8%B3%D9%8A%D8%A7%D8%B1%D8%A7%D8%AA-%D9%84%D9%84%D8%A8%D9%8A%D8%B9?page='
 file.write('[\n')
@@ -31,6 +31,10 @@ for page in range(100):
                 type = all_li[1].find('a').get('title')
                 year = all_li[2].find('a').get('title')
                 km = all_li[3].find('a').get('title')
+                print(km.split('-'))
+                print(km[0])
+                print(km[1])
+                print(km[2])
                 writer.writerow({'name': name.text, 'price': price.text.replace(',', ''), 'img': img.get(
                     'src'), 'type': type, 'year': year, 'km': km})
                 data['name'] = name.text
