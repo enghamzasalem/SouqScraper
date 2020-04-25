@@ -11,7 +11,7 @@ file.write('[\n')
 data = {}
 csv_columns = [ 'chapter','img']
 page=319
-for page in range(682,782):
+for page in range(400,700):
     print('---', page, '---')
     url = 'https://3asq.org/manga/one-piece/'+str(page)+'/?style=list'
     print(url)
