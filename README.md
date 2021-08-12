@@ -1,8 +1,9 @@
-# SouqScraper/I am Hassan
-Script for scarping items from souq.com using BeautifulSoup and Python3 
-you need to install Python3 and BeautifulSoup 
+# SouqScraper/I am Hassan Merai .....
 
-the code is very simple 
+Script for scarping items from souq.com using BeautifulSoup and Python3
+you need to install Python3 and BeautifulSoup
+
+the code is very simple
 
 ```sh
 import requests
@@ -27,12 +28,14 @@ for page in range(1000):
     writer = csv.DictWriter(filecsv, fieldnames=csv_columns)
     i=0
     writer.writeheader()
-    for pt in  ancher:        
+    for pt in  ancher:
 file.write("\n]")
 filecsv.close()
 file.close()
 ```
+
 and the output will be :
+
 ```sh
 [
 {"name": "سماعات ابل اير بودز اللاسلكية، ابيض - MMEF2                ", "price": "665.00", "img": "https://cf4.s3.souqcdn.com/item/2016/10/06/11/64/54/16/item_M_11645416_16747749.jpg"},
