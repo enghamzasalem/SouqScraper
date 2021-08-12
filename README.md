@@ -1,4 +1,4 @@
-# SouqScraper
+# SouqScraper/I am Hassan
 Script for scarping items from souq.com using BeautifulSoup and Python3 
 you need to install Python3 and BeautifulSoup 
 
