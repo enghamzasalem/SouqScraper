@@ -1,9 +1,8 @@
 import requests
 # import urllib.request offline
-import time
 from bs4 import BeautifulSoup
 import json
-import csv
+
 filecsv = open('meme.csv', 'w', encoding='utf8')
 # Set the URL you want to webscrape from
 url = 'https://imgflip.com/?page='
