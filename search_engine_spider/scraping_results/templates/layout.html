@@ -1,0 +1,15 @@
+{% load static %}
+{% load django_bootstrap5 %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Search Engine Spider</title>
+    {% bootstrap_css %}
+</head>
+<body>
+<div>
+    {% block body %}{% endblock %}
+</div>
+{% bootstrap_javascript %}
+</body>
+</html>

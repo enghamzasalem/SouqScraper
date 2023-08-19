@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+{% load django_bootstrap5 %}
+
+{% load static %}
+
+{% block body %}
+    <div class="col">
+        <div class="col mt-5">
+            <img src="{% static 'images/logo.png' %}" class="w-25 mx-auto d-block">
+        </div>
+        <div class="container text-center">
+            <form class="w-75 mx-auto mt-5" method="POST" action="/search_results">
+                {% csrf_token %}
+                {% bootstrap_form form show_label=False %}
+
+                {% bootstrap_button button_type="submit" content="Search" button_class='btn-primary' %}
+            </form>
+        </div>
+    </div>
+{% endblock %}
