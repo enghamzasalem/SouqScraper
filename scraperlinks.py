@@ -1,5 +1,4 @@
 from bs4 import BeautifulSoup
-from urllib.request import urlopen
 import re
 import requests
 
@@ -8,8 +7,8 @@ allsite = ["https://enghamzasalem.com/",
            "https://stackoverflow.com", "https://www.vardot.com/en", "http://www.clickjordan.net/", "https://vtechbd.com/"]
 links = []
 tels = []
-for l in allsite:
-    r = requests.get(l)
+for site in allsite:
+    r = requests.get(site)
     soup = BeautifulSoup(r.content, "html.parser")
     for link in soup.findAll('a', attrs={'href': re.compile("^mailto:")}):
         links.append(link.get('href'))
