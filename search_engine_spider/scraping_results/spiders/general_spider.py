@@ -1,6 +1,5 @@
 import os
 import sys
-from urllib.parse import urlparse
 
 # Set up Django environment
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".."))
@@ -11,11 +10,15 @@ django.setup()
 import requests
 from bs4 import BeautifulSoup
 from scraping_results.models import ScrapingResult
+from concurrent.futures import ThreadPoolExecutor
+from urllib.parse import urlparse
 
 
 class Spider:
     # crawl a URL
-    def crawl(self, url, depth):
+    def crawl(self, url, depth, parallel=True):
+        # set parallel=False if you use sqlite or any database which doesn't support concurrent access
+
         # try to perform HTTP GET request
         try:
             print('Crawling url: "%s" at depth: %d' % (url, depth))
@@ -35,7 +38,7 @@ class Spider:
                 if hasattr(tag, 'text'):
                     page_content += tag.text.strip().replace('\n', ' ')
         except:
-            print('Failed to extract title and description of "%s"\n' % url)
+            print('Failed to extract title and text content of "%s"\n' % url)
             return
 
         # store the result structure
@@ -48,19 +51,27 @@ class Spider:
         # extract all the available links on the page
         links = content.findAll('a')
 
-        # loop over links
-        for link in links:
-            # try to crawl links recursively
+        def crawl_link(link):
             try:
-                if link['href'].startswith('http'):
-                    self.crawl(link['href'], depth - 1)
+                href = link['href']
+                if href.startswith('http'):
+                    self.crawl(href, depth - 1)
                 else:
                     parsed_url = urlparse(url)
                     protocol = parsed_url.scheme
                     domain = parsed_url.netloc
-                    self.crawl(f'{protocol}://{domain}{link["href"]}', depth - 1)
+                    self.crawl(f'{protocol}://{domain}{href}', depth - 1)
             except KeyError:
                 pass
+
+        if parallel:
+            # loop over links in parallel
+            with ThreadPoolExecutor(max_workers=10) as executor:
+                executor.map(crawl_link, links)
+        else:
+            # loop over links one by one
+            for link in links:
+                crawl_link(link)
 
 
 # Using the Spider
