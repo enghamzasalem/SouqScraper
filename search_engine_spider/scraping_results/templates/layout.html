@@ -5,11 +5,14 @@
     <meta charset="utf-8">
     <title>Search Engine Spider</title>
     {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'css/scrollpagination.css' %}"/>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 <body>
 <div>
     {% block body %}{% endblock %}
 </div>
 {% bootstrap_javascript %}
+<script src="{% static 'js/scrollpagination.js' %}"></script>
 </body>
 </html>

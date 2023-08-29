@@ -9,10 +9,8 @@
             <img src="{% static 'images/logo.png' %}" class="w-25 mx-auto d-block">
         </div>
         <div class="container text-center">
-            <form class="w-75 mx-auto mt-5" method="POST" action="/search_results">
-                {% csrf_token %}
+            <form class="w-75 mx-auto mt-5" method="GET" action="{% url 'search_results' %}">
                 {% bootstrap_form form show_label=False %}
-
                 {% bootstrap_button button_type="submit" content="Search" button_class='btn-primary' %}
             </form>
         </div>

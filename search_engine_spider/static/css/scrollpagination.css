@@ -1,0 +1,32 @@
+#scrollpagination {
+	max-width: 600px;
+	margin: 0px auto;
+}
+
+#scrollpagination ul {
+	list-style: none;
+	width: 100%;
+	margin: 0px auto;
+	padding: 0px;
+}
+
+#scrollpagination ul li {
+	margin: 10px 0px;
+	width: 100%;
+	background: #352828;
+	padding: 5px 10px;
+	border-radius: 6px;
+	text-shadow: 2px 1px -1px #000000;
+}
+
+.loading {
+	background: #c1c39a;
+	color: #303030;
+	font-size: 20px;
+	padding: 5px 10px;
+	text-align: center;
+	width: 100%;
+	margin: 0px auto;
+	display: :none;
+	border-radius: 5px;
+}
