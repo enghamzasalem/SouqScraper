@@ -1,0 +1,69 @@
+{% extends 'layout.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block body %}
+    <div class="w-100 position-fixed top-0 pt-2 bg-white">
+        <form class="w-75 mx-auto d-flex" method="GET" action="{% url 'search_results' %}">
+            {% bootstrap_form form show_label=False layout='inline' %}
+            {% bootstrap_button button_type="submit" content="Search" button_class='btn-primary' size='sm' %}
+        </form>
+    </div>
+    <div>
+        <div class="container">
+            <div class="row search-results-list" style="margin-top: 100px;">
+                {% for result in search_results %}
+                    {% include 'scraping_results/search_result_item.html' with result=result %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="text-center d-none" id="loading">
+        <div class="spinner-grow text-primary" role="status"></div>
+        <div class="spinner-grow text-primary" role="status"></div>
+        <div class="spinner-grow text-primary" role="status"></div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            window.news_index = '{% url 'search_results' %}';
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const query = urlParams.get('query');
+
+            let page = 1;
+            let block_request = false;
+            let end_pagination = false;
+
+            const loadingSpinner = $('#loading');
+
+            $(window).scroll(function () {
+                const margin = $(window).height() - 400;
+                if ($(window).scrollTop() + $(window).height() > margin && !end_pagination && !block_request) {
+                    loadingSpinner.removeClass('d-none');
+                    block_request = true;
+                    page += 1;
+
+                    $.ajax({
+                        type: 'GET',
+                        url: window.news_index,
+                        data: {
+                            "query": query,
+                            "page": page,
+                            "is_ajax": true,
+                        },
+                        success: function (data) {
+                            if (data?.end_pagination) {
+                                end_pagination = true;
+                            } else {
+                                block_request = false;
+                            }
+                            loadingSpinner.addClass('d-none');
+                            $('.search-results-list').append(data.content);
+                        }
+                    })
+                }
+            });
+        })
+    </script>
+{% endblock %}
